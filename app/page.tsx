@@ -5,7 +5,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="mx-auto max-w-5xl">
         <h1 className="text-3xl font-bold text-gray-900">
-          地域のお店を探せるアプリ
+          横須賀市のお店情報
         </h1>
         <p className="mt-4 text-gray-600">
           地元のお店の情報やクーポンをまとめて見られるサービスです。
