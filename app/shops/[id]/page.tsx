@@ -1,59 +1,73 @@
-type Shop = {
-  id: number;
-  name: string;
-  category: string;
-  area: string;
-  hours: string;
-  description: string;
-  coupon: string;
-};
+import Link from "next/link";
 
-const shops: Shop[] = [
+const shops = [
   {
     id: 1,
     name: "カフェひまわり",
     category: "カフェ",
-    area: "〇〇市",
+    area: "東海市",
+    description: "落ち着いた雰囲気のカフェです",
     hours: "10:00〜19:00",
-    description: "落ち着いた雰囲気の地域密着カフェ",
     coupon: "ドリンク1杯無料",
   },
   {
     id: 2,
-    name: "らーめん青空",
+    name: "ラーメン青空",
     category: "ラーメン",
-    area: "〇〇市",
+    area: "東海市",
+    description: "こだわりのスープが人気",
     hours: "11:00〜22:00",
-    description: "濃厚スープが人気のお店",
     coupon: "大盛り無料",
   },
 ];
 
-export default async function ShopDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const shop = shops.find((s) => s.id === Number(id));
+export default function ShopDetailPage({ params }: any) {
+  const shop = shops.find((s) => s.id === Number(params.id));
 
   if (!shop) {
-    return <main className="p-8">お店が見つかりません。</main>;
+    return <div className="p-10">店舗が見つかりません</div>;
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="mx-auto max-w-4xl rounded-xl bg-white p-6 shadow">
-        <h1 className="text-3xl font-bold">{shop.name}</h1>
-        <p className="mt-2 text-gray-500">
-          {shop.category} / {shop.area}
-        </p>
-        <p className="mt-4">{shop.description}</p>
-        <p className="mt-4">営業時間: {shop.hours}</p>
+    <main className="relative min-h-screen overflow-hidden">
+      {/* 背景 */}
+      <div
+        className="absolute inset-0 bg-cover bg-center blur-sm scale-105"
+        style={{ backgroundImage: "url('/city.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-white/70" />
 
-        <div className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4">
-          <h2 className="font-semibold text-red-700">クーポン</h2>
-          <p className="mt-2">{shop.coupon}</p>
+      {/* コンテンツ */}
+      <div className="relative z-10 p-8">
+        <div className="mx-auto max-w-3xl rounded-3xl bg-white/90 p-8 shadow-xl backdrop-blur-sm">
+          
+          <Link href="/shops" className="text-sm text-gray-500 hover:underline">
+            ← 一覧に戻る
+          </Link>
+
+          <h1 className="mt-4 text-3xl font-bold text-gray-900">
+            {shop.name}
+          </h1>
+
+          <p className="mt-2 text-sm text-gray-500">
+            {shop.category} / {shop.area}
+          </p>
+
+          <p className="mt-6 text-gray-700 leading-relaxed">
+            {shop.description}
+          </p>
+
+          <div className="mt-6 space-y-2 text-sm">
+            <p>営業時間: {shop.hours}</p>
+          </div>
+
+          <div className="mt-6 bg-red-100 text-red-600 px-4 py-3 rounded-lg text-sm font-medium">
+            🎉 {shop.coupon}
+          </div>
+
+          <button className="mt-6 w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition">
+            クーポンを利用する
+          </button>
         </div>
       </div>
     </main>
